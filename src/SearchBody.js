@@ -8,18 +8,17 @@ import { useState } from "react";
 const key = "4a0abc706ea965f883535eda89041f74";
 const apiUrl = `https://api.openweathermap.org/data/2.5/weather`;
 
-// "https://api.openweathermap.org/data/2.5/weather?q=Dhaka&appid=4a0abc706ea965f883535eda89041f74
 
 const SearchBody = () => {
+
+  // States to save the user input and save api data
 
   const [isFetched, setIsFetched] = useState(false);
   const [userInput, setUserInput] = useState('')
   
   const [city, setCity] = useState();
-  // const [search, setSearch] = useState('Toronto');
 
-
-  // useEffect ( () => {
+// Fetching Api data
 
     const fetchApi = async (search) => {
       const url = new URL(apiUrl);
@@ -29,45 +28,33 @@ const SearchBody = () => {
         units: "metric",
       });
 
-      
-        const response = await fetch(url);
-        // console.log(response);
-        if (response.ok) {
-          const jsonData = await response.json();
-          // console.log(jsonData);
-          setCity(jsonData);
-          setIsFetched(true)
-          // return jsonData;
-        } else {
-          setIsFetched(false)
-          return new Error("API is not available at this moment");
-        }
+      const response = await fetch(url);
+      if (response.ok) {
+        const jsonData = await response.json();
+        setCity(jsonData);
+        setIsFetched(true)
+      } else {
+        setIsFetched(false)
+        return new Error("API is not available at this moment");
+      }
       
     }
 
-  //   fetchApi();
-
-  // }, [search]);
-
-
+// Search handle function
   const handleSubmit = (e, userInput) => {
     e.preventDefault();
     fetchApi(userInput);
   };
 
-
   const dateTime = () => {
-
     <>
       <DateBuilder />
       <TimeBuilder />
     </>;
-
   }
 
   dateTime();
   
-
   return (
     <div
       className={
@@ -106,7 +93,6 @@ const SearchBody = () => {
                   type="text"
                   className="search-bar"
                   placeholder="Search location..."
-                  // value={search}
                   onChange={(event) => setUserInput(event.target.value)}
                 />
               </form>
@@ -152,7 +138,7 @@ const SearchBody = () => {
                 <div className="humidity-wind-container">
                   <div className="min-max">
                     <div className="left-arrow">
-                      <i class="fas fa-angle-double-left"></i>
+                      <i className="fas fa-angle-double-left"></i>
                     </div>
                     <div className="max-temp">
                       <img src="./icons/max.png" alt="max-temp-icon" />
@@ -201,13 +187,12 @@ const SearchBody = () => {
                       {window.moment(city.sys.sunset * 1000).format(`HH:mm a`)}
                     </div>
                     <div className="right-arrow">
-                      <i class="fas fa-angle-double-right"></i>
+                      <i className="fas fa-angle-double-right"></i>
                     </div>
                   </div>
                 </div>
               </>
             ) : (
-              // <p className="error-msg">No data found!</p>
               <div className="bird-flying">
                 <img src="./icons/bird-flying.gif" alt="weather-icon" />
               </div>
