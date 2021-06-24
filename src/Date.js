@@ -32,7 +32,7 @@ const DateBuilder = (par) => {
   let month = months[par.getMonth()];
   let year = par.getFullYear();
 
-  return `${day} ${date}, ${month} ${year},`;
+  return `${day} ${date}, ${month} ${year}`;
 };
 
 export default DateBuilder;
